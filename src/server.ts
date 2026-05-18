@@ -33,24 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Then subdomain routing & multi-tenant
-app.use(subdomainRouter);
-app.use(devClientContext);
-app.use(attachQueryBuilder);
-
-// Admin routes with authentication (Phase 2+)
-app.use('/admin/clients', adminClientsRouter);
-app.use('/admin/users', adminUsersRouter);  // Note: includes login endpoint
-app.use('/admin/dashboard', adminAuthMiddleware, adminDashboardRouter);
-app.use('/admin/deletion-requests', adminAuthMiddleware, adminDeletionRequestsRouter);
-app.use('/admin/audit', adminAuthMiddleware, adminAuditRouter);
-
-// Tenant routes
-app.use('/auth', authRoutes);
-app.use('/invitations', invitationRoutes);
-app.use('/buildings', buildingRoutes);
-
-// Health Check Endpoints
+// Health Check Endpoints (BEFORE multi-tenant middleware)
 app.get('/health', (_req: Request, res: Response) => {
   res.json({
     status: 'ok',
@@ -85,6 +68,23 @@ app.get('/', (_req: Request, res: Response) => {
     documentation: '/api/docs',
   });
 });
+
+// Then subdomain routing & multi-tenant
+app.use(subdomainRouter);
+app.use(devClientContext);
+app.use(attachQueryBuilder);
+
+// Admin routes with authentication (Phase 2+)
+app.use('/admin/clients', adminClientsRouter);
+app.use('/admin/users', adminUsersRouter);  // Note: includes login endpoint
+app.use('/admin/dashboard', adminAuthMiddleware, adminDashboardRouter);
+app.use('/admin/deletion-requests', adminAuthMiddleware, adminDeletionRequestsRouter);
+app.use('/admin/audit', adminAuthMiddleware, adminAuditRouter);
+
+// Tenant routes
+app.use('/auth', authRoutes);
+app.use('/invitations', invitationRoutes);
+app.use('/buildings', buildingRoutes);
 
 // 404 Handler
 app.use((req: Request, res: Response) => {
