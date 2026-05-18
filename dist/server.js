@@ -33,21 +33,7 @@ app.use((0, cors_1.default)({
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
-// Then subdomain routing & multi-tenant
-app.use(subdomainRouter_1.subdomainRouter);
-app.use(subdomainRouter_1.devClientContext);
-app.use(dataIsolation_1.attachQueryBuilder);
-// Admin routes with authentication (Phase 2+)
-app.use('/admin/clients', clients_1.default);
-app.use('/admin/users', users_1.default); // Note: includes login endpoint
-app.use('/admin/dashboard', adminAuth_1.adminAuthMiddleware, dashboard_1.default);
-app.use('/admin/deletion-requests', adminAuth_1.adminAuthMiddleware, deletion_requests_1.default);
-app.use('/admin/audit', adminAuth_1.adminAuthMiddleware, audit_1.default);
-// Tenant routes
-app.use('/auth', auth_1.default);
-app.use('/invitations', invitations_1.default);
-app.use('/buildings', buildings_1.default);
-// Health Check Endpoints
+// Health Check Endpoints (BEFORE multi-tenant middleware)
 app.get('/health', (_req, res) => {
     res.json({
         status: 'ok',
@@ -81,6 +67,20 @@ app.get('/', (_req, res) => {
         documentation: '/api/docs',
     });
 });
+// Then subdomain routing & multi-tenant
+app.use(subdomainRouter_1.subdomainRouter);
+app.use(subdomainRouter_1.devClientContext);
+app.use(dataIsolation_1.attachQueryBuilder);
+// Admin routes with authentication (Phase 2+)
+app.use('/admin/clients', clients_1.default);
+app.use('/admin/users', users_1.default); // Note: includes login endpoint
+app.use('/admin/dashboard', adminAuth_1.adminAuthMiddleware, dashboard_1.default);
+app.use('/admin/deletion-requests', adminAuth_1.adminAuthMiddleware, deletion_requests_1.default);
+app.use('/admin/audit', adminAuth_1.adminAuthMiddleware, audit_1.default);
+// Tenant routes
+app.use('/auth', auth_1.default);
+app.use('/invitations', invitations_1.default);
+app.use('/buildings', buildings_1.default);
 // 404 Handler
 app.use((req, res) => {
     res.status(404).json({

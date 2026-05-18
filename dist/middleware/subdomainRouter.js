@@ -60,8 +60,8 @@ const subdomainRouter = async (req, res, next) => {
             return next();
         }
         // Check for reserved subdomains
-        if (subdomain === 'admin' || subdomain === 'www') {
-            // These are for company-level pages, not client portals
+        if (subdomain === 'admin' || subdomain === 'www' || subdomain === 'api' || subdomain === 'buildhub-api') {
+            // These are for company-level pages/APIs, not client portals
             req.clientContext = undefined;
             return next();
         }
