@@ -5,7 +5,6 @@ interface SendInvitationParams {
     invitedById: string;
 }
 interface AcceptInvitationParams {
-    token: string;
     firstName: string;
     lastName: string;
     password: string;

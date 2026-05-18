@@ -5,7 +5,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { verifyAccessToken } from '@utils/jwt';
-import type { JWTPayload } from '@types/auth';
+import type { JWTPayload } from '@/types/auth';
 
 /**
  * Extend Express Request to include authenticated user info

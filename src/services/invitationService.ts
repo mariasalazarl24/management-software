@@ -14,7 +14,6 @@ interface SendInvitationParams {
 }
 
 interface AcceptInvitationParams {
-  token: string;
   firstName: string;
   lastName: string;
   password: string;

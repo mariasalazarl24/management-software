@@ -6,7 +6,7 @@
 export interface JWTPayload {
   userId: string;
   email: string;
-  role: 'OWNER' | 'ADMIN' | 'BOARD_MEMBER' | 'USER';
+  role: 'OWNER' | 'ADMIN' | 'BOARD_MEMBER';
   iat?: number;
   exp?: number;
 }
@@ -22,7 +22,7 @@ export interface AuthResponse {
       email: string;
       firstName: string;
       lastName: string;
-      role: 'OWNER' | 'ADMIN' | 'BOARD_MEMBER' | 'USER';
+      role: 'OWNER' | 'ADMIN' | 'BOARD_MEMBER';
     };
   };
   error?: string;
@@ -47,5 +47,5 @@ export interface RefreshTokenRequest {
 export interface AuthenticatedRequest {
   userId: string;
   email: string;
-  role: 'OWNER' | 'ADMIN' | 'BOARD_MEMBER' | 'USER';
+  role: 'OWNER' | 'ADMIN' | 'BOARD_MEMBER';
 }

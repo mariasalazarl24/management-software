@@ -17,21 +17,21 @@ export async function getUserBuildings(userId: string, limit = 10, offset = 0) {
   // Get buildings through BuildingMember relationship
   const buildings = await prisma.building.findMany({
     where: {
-      buildingMembers: {
+      members: {
         some: {
           userId: userId,
         },
       },
     },
     include: {
-      buildingMembers: {
+      members: {
         where: { userId: userId },
         select: { role: true },
       },
       _count: {
         select: {
           apartments: true,
-          buildingMembers: true,
+          members: true,
         },
       },
     },
@@ -45,11 +45,10 @@ export async function getUserBuildings(userId: string, limit = 10, offset = 0) {
     name: building.name,
     address: building.address,
     city: building.city,
-    province: building.province,
-    zipCode: building.zipCode,
-    userRole: building.buildingMembers[0]?.role,
+    postalCode: building.postalCode,
+    userRole: building.members[0]?.role,
     apartmentCount: building._count.apartments,
-    memberCount: building._count.buildingMembers,
+    memberCount: building._count.members,
     createdAt: building.createdAt,
   }));
 }
@@ -61,12 +60,10 @@ export async function getUserBuildings(userId: string, limit = 10, offset = 0) {
  */
 export async function getBuildingDetails(buildingId: string, userId: string) {
   // Check if user is member of this building
-  const userMembership = await prisma.buildingMember.findUnique({
+  const userMembership = await prisma.buildingMember.findFirst({
     where: {
-      userId_buildingId: {
-        userId,
-        buildingId,
-      },
+      userId,
+      buildingId,
     },
   });
 
@@ -80,8 +77,7 @@ export async function getBuildingDetails(buildingId: string, userId: string) {
       _count: {
         select: {
           apartments: true,
-          buildingMembers: true,
-          maintenanceRequests: true,
+          members: true,
         },
       },
     },
@@ -105,12 +101,10 @@ export async function getBuildingDetails(buildingId: string, userId: string) {
  */
 export async function getBuildingMembers(buildingId: string, userId: string) {
   // Verify user is member
-  const userMembership = await prisma.buildingMember.findUnique({
+  const userMembership = await prisma.buildingMember.findFirst({
     where: {
-      userId_buildingId: {
-        userId,
-        buildingId,
-      },
+      userId,
+      buildingId,
     },
   });
 
@@ -130,7 +124,7 @@ export async function getBuildingMembers(buildingId: string, userId: string) {
         },
       },
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { joinedAt: 'desc' },
   });
 
   return members.map((member) => ({
@@ -139,7 +133,7 @@ export async function getBuildingMembers(buildingId: string, userId: string) {
     firstName: member.user.firstName,
     lastName: member.user.lastName,
     role: member.role,
-    joinedAt: member.createdAt,
+    joinedAt: member.joinedAt,
   }));
 }
 
@@ -149,12 +143,10 @@ export async function getBuildingMembers(buildingId: string, userId: string) {
  * @param userId - User ID
  */
 export async function isBuildingAdmin(buildingId: string, userId: string): Promise<boolean> {
-  const membership = await prisma.buildingMember.findUnique({
+  const membership = await prisma.buildingMember.findFirst({
     where: {
-      userId_buildingId: {
-        userId,
-        buildingId,
-      },
+      userId,
+      buildingId,
     },
   });
 
@@ -169,7 +161,7 @@ export async function getDashboardMetrics(userId: string) {
   // Get all user's buildings
   const buildings = await prisma.building.count({
     where: {
-      buildingMembers: {
+      members: {
         some: {
           userId: userId,
         },
@@ -181,7 +173,7 @@ export async function getDashboardMetrics(userId: string) {
   const apartments = await prisma.apartment.count({
     where: {
       building: {
-        buildingMembers: {
+        members: {
           some: {
             userId: userId,
           },
@@ -194,7 +186,7 @@ export async function getDashboardMetrics(userId: string) {
   const members = await prisma.buildingMember.count({
     where: {
       building: {
-        buildingMembers: {
+        members: {
           some: {
             userId: userId,
           },
@@ -208,7 +200,7 @@ export async function getDashboardMetrics(userId: string) {
     where: {
       apartment: {
         building: {
-          buildingMembers: {
+          members: {
             some: {
               userId: userId,
             },
@@ -223,7 +215,7 @@ export async function getDashboardMetrics(userId: string) {
       createdAt: true,
       apartment: {
         select: {
-          number: true,
+          unitNumber: true,
           building: {
             select: {
               name: true,
@@ -244,7 +236,7 @@ export async function getDashboardMetrics(userId: string) {
       id: activity.id,
       title: activity.title,
       status: activity.status,
-      apartmentNumber: activity.apartment.number,
+      apartmentNumber: activity.apartment.unitNumber,
       buildingName: activity.apartment.building.name,
       createdAt: activity.createdAt,
     })),

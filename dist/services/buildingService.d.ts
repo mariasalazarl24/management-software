@@ -13,11 +13,10 @@ export declare function getUserBuildings(userId: string, limit?: number, offset?
     name: string;
     address: string;
     city: string;
-    province: any;
-    zipCode: any;
-    userRole: any;
-    apartmentCount: any;
-    memberCount: any;
+    postalCode: string | null;
+    userRole: import(".prisma/client").$Enums.BuildingRole;
+    apartmentCount: number;
+    memberCount: number;
     createdAt: Date;
 }[]>;
 /**
@@ -27,7 +26,14 @@ export declare function getUserBuildings(userId: string, limit?: number, offset?
  */
 export declare function getBuildingDetails(buildingId: string, userId: string): Promise<{
     userRole: import(".prisma/client").$Enums.BuildingRole;
-    stats: any;
+    stats: {
+        members: number;
+        apartments: number;
+    };
+    _count: {
+        members: number;
+        apartments: number;
+    };
     id: string;
     status: import(".prisma/client").$Enums.BuildingStatus;
     createdAt: Date;
@@ -48,12 +54,12 @@ export declare function getBuildingDetails(buildingId: string, userId: string): 
  * @param userId - User ID (for permission check)
  */
 export declare function getBuildingMembers(buildingId: string, userId: string): Promise<{
-    id: any;
-    email: any;
-    firstName: any;
-    lastName: any;
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
     role: import(".prisma/client").$Enums.BuildingRole;
-    joinedAt: any;
+    joinedAt: Date;
 }[]>;
 /**
  * Check if user is admin of a building
@@ -73,8 +79,8 @@ export declare function getDashboardMetrics(userId: string): Promise<{
         id: string;
         title: string;
         status: import(".prisma/client").$Enums.MaintenanceStatus;
-        apartmentNumber: any;
-        buildingName: any;
+        apartmentNumber: string;
+        buildingName: string;
         createdAt: Date;
     }[];
 }>;

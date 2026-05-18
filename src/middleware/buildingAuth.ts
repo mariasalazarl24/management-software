@@ -38,12 +38,10 @@ export async function buildingAuthMiddleware(
     }
 
     // Check if user is a member of this building
-    const membership = await prisma.buildingMember.findUnique({
+    const membership = await prisma.buildingMember.findFirst({
       where: {
-        userId_buildingId: {
-          userId: req.user.userId,
-          buildingId: buildingId,
-        },
+        userId: req.user.userId,
+        buildingId: buildingId,
       },
     });
 

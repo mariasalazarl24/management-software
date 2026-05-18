@@ -45,7 +45,7 @@ async function registerUser(data) {
             password: hashedPassword,
             firstName,
             lastName,
-            role: 'USER',
+            role: 'OWNER',
             status: 'ACTIVE',
         },
     });

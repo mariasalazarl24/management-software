@@ -4,7 +4,7 @@
  */
 
 import { PrismaClient } from '@prisma/client';
-import type { LoginRequest, RegisterRequest, JWTPayload } from '@types/auth';
+import type { LoginRequest, RegisterRequest, JWTPayload } from '@/types/auth';
 import { hashPassword, comparePassword, validatePasswordStrength } from '@utils/password';
 import { generateTokenPair, verifyRefreshToken } from '@utils/jwt';
 
@@ -51,7 +51,7 @@ export async function registerUser(data: RegisterRequest) {
       password: hashedPassword,
       firstName,
       lastName,
-      role: 'USER',
+      role: 'OWNER',
       status: 'ACTIVE',
     },
   });
