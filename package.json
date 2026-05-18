@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node -r tsconfig-paths/register src/server.ts",
     "build": "tsc; tsc-alias",
-    "start": "npx prisma migrate deploy && node dist/server.js",
+    "start": "npx prisma db push --skip-generate && node dist/server.js",
     "test": "jest --forceExit --detectOpenHandles",
     "test:coverage": "jest --coverage --forceExit",
     "test:manual": "bash tests/phase2-endpoints.sh",
