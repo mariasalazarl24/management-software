@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.requireAuth = exports.requireOwner = exports.requireAdmin = void 0;
 exports.authMiddleware = authMiddleware;
 exports.authorizeRole = authorizeRole;
-const jwt_1 = require("@utils/jwt");
+const jwt_1 = require("../utils/jwt");
 /**
  * Middleware to verify JWT token and attach user info to request
  * Expected header: Authorization: Bearer <token>

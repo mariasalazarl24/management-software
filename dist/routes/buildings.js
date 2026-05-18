@@ -38,9 +38,9 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const auth_1 = require("@middleware/auth");
-const buildingAuth_1 = require("@middleware/buildingAuth");
-const buildingService = __importStar(require("@services/buildingService"));
+const auth_1 = require("../middleware/auth");
+const buildingAuth_1 = require("../middleware/buildingAuth");
+const buildingService = __importStar(require("../services/buildingService"));
 const router = (0, express_1.Router)();
 /**
  * GET /buildings

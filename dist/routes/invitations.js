@@ -35,10 +35,10 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const zod_1 = require("zod");
-const auth_1 = require("@middleware/auth");
-const buildingAuth_1 = require("@middleware/buildingAuth");
-const invitationService = __importStar(require("@services/invitationService"));
-const passwordUtils = __importStar(require("@utils/password"));
+const auth_1 = require("../middleware/auth");
+const buildingAuth_1 = require("../middleware/buildingAuth");
+const invitationService = __importStar(require("../services/invitationService"));
+const passwordUtils = __importStar(require("../utils/password"));
 const router = (0, express_1.Router)();
 // Validation schemas
 const sendInvitationSchema = zod_1.z.object({

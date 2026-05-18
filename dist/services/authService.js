@@ -9,8 +9,8 @@ exports.loginUser = loginUser;
 exports.refreshAccessToken = refreshAccessToken;
 exports.getUserById = getUserById;
 const client_1 = require("@prisma/client");
-const password_1 = require("@utils/password");
-const jwt_1 = require("@utils/jwt");
+const password_1 = require("../utils/password");
+const jwt_1 = require("../utils/jwt");
 const prisma = new client_1.PrismaClient();
 /**
  * Register a new user

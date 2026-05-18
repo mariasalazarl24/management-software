@@ -39,8 +39,8 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const zod_1 = require("zod");
-const authService = __importStar(require("@services/authService"));
-const auth_1 = require("@middleware/auth");
+const authService = __importStar(require("../services/authService"));
+const auth_1 = require("../middleware/auth");
 const router = (0, express_1.Router)();
 /**
  * Validation schemas

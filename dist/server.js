@@ -13,6 +13,7 @@ const deletion_requests_1 = __importDefault(require("./routes/admin/deletion-req
 const audit_1 = __importDefault(require("./routes/admin/audit"));
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const db_1 = require("./db");
 const auth_1 = __importDefault(require("./routes/auth"));
@@ -31,6 +32,7 @@ app.use((0, cors_1.default)({
 // Parse JSON FIRST (before routes!)
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+app.use((0, cookie_parser_1.default)());
 // Then subdomain routing & multi-tenant
 app.use(subdomainRouter_1.subdomainRouter);
 app.use(subdomainRouter_1.devClientContext);

@@ -4,7 +4,7 @@
  */
 
 import jwt from 'jsonwebtoken';
-import { JWTPayload } from '@types/auth';
+import type { JWTPayload } from '@types/auth';
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'access-secret-key';
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'refresh-secret-key';

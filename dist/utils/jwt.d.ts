@@ -2,7 +2,7 @@
  * JWT Utilities
  * Handles JWT token generation, verification, and refresh logic
  */
-import { JWTPayload } from '@types/auth';
+import type { JWTPayload } from '../types/auth';
 /**
  * Generate access token
  * @param payload - JWT payload containing user info

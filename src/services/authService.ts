@@ -4,7 +4,7 @@
  */
 
 import { PrismaClient } from '@prisma/client';
-import { LoginRequest, RegisterRequest, JWTPayload } from '@types/auth';
+import type { LoginRequest, RegisterRequest, JWTPayload } from '@types/auth';
 import { hashPassword, comparePassword, validatePasswordStrength } from '@utils/password';
 import { generateTokenPair, verifyRefreshToken } from '@utils/jwt';
 

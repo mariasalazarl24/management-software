@@ -37,9 +37,26 @@ router.post('/login', async (req, res) => {
     try {
         const data = loginSchema.parse(req.body);
         const result = await adminUserService_1.adminUserService.login(data);
+        // Set HttpOnly cookies for secure authentication
+        res.cookie('accessToken', result.accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 3600000, // 1 hour
+            path: '/',
+        });
+        res.cookie('refreshToken', result.refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 604800000, // 7 days
+            path: '/',
+        });
+        // Return user data (but not tokens, they're in cookies)
+        const { accessToken, refreshToken, ...userWithoutTokens } = result;
         res.status(200).json({
             success: true,
-            data: result,
+            data: userWithoutTokens,
         });
     }
     catch (error) {

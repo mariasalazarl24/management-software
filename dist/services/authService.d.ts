@@ -2,7 +2,7 @@
  * Authentication Service
  * Handles user registration, login, token generation, and refresh
  */
-import { LoginRequest, RegisterRequest } from '@types/auth';
+import type { LoginRequest, RegisterRequest } from '../types/auth';
 /**
  * Register a new user
  * @param data - Registration data (email, password, firstName, lastName)
