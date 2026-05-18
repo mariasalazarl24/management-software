@@ -8,6 +8,7 @@ import adminDeletionRequestsRouter from './routes/admin/deletion-requests';
 import adminAuditRouter from './routes/admin/audit';
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { prisma } from './db';
 import authRoutes from './routes/auth';
@@ -30,6 +31,7 @@ app.use(cors({
 // Parse JSON FIRST (before routes!)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Then subdomain routing & multi-tenant
 app.use(subdomainRouter);
